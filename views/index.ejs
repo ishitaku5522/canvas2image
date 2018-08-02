@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+      function saveImage(){
+        let canvas = document.querySelector('#canvas')
+        // canvasの画像をbase64にエンコード
+        let dataURL = canvas.toDataURL()
+        console.log(dataURL);
+
+        // データ送信
+        $.ajax({
+          method: "POST",
+          url:"image",
+          data:{image: dataURL}
+        }).then(function(res){
+          console.log(res);
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      $(window).on('load',function(){
+
+        let canvas = document.querySelector('#canvas')
+        if (canvas.getContext) {
+          var context = canvas.getContext('2d');
+          //左から20上から40の位置に、幅50高さ100の四角形を描く
+          context.fillRect(20,40,50,100);
+        }
+
+      });
+    </script>
+
+    <canvas id="canvas" style="border:solid 1px;">
+    </canvas>
+    <input type="button" value="Save Image" onclick="saveImage()">
+  </body>
+</html>
